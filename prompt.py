@@ -3,14 +3,14 @@ import time
 import itertools
 import imp  # Keeping imp as per your request
 
-st.set_page_config(page_title='Wisp!', page_icon='Logo.png')
+st.set_page_config(page_title='Wisp!', page_icon= logo_url)
 
 # Store messages
 if 'messages' not in st.session_state:
     st.session_state.messages = []
 
 # Use RAW GitHub URLs for images
-logo_url = "https://raw.githubusercontent.com/CIBIRAJGL/WISP/main/logo.png"
+logo_url = "https://raw.githubusercontent.com/CIBIRAJGL/WISP/main/Logo.png"
 user_url = "https://raw.githubusercontent.com/CIBIRAJGL/WISP/main/user.png"
 avatars = {"assistant": logo_url, "user": user_url}
 
