@@ -8,8 +8,9 @@ st.set_page_config(page_title='Wisp!', page_icon='Logo.png')
 # Store messages
 if 'messages' not in st.session_state:
     st.session_state.messages = []
-
-avatars = {"assistant": "Logo.png", "user": "User.png"}
+logo_url="https://github.com/CIBIRAJGL/WISP/blob/main/user.png"
+user_url="https://github.com/CIBIRAJGL/WISP/blob/main/user.png"
+avatars = {"assistant": logo_url, "user": user_url}
 
 st.markdown("# Hey Wisp! 🤖")
 
