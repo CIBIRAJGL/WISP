@@ -10,7 +10,7 @@ if 'messages' not in st.session_state:
     st.session_state.messages = []
 
 # Use RAW GitHub URLs for images
-logo_url = "https://raw.githubusercontent.com/CIBIRAJGL/WISP/main/user.png"
+logo_url = "https://raw.githubusercontent.com/CIBIRAJGL/WISP/main/logo.png"
 user_url = "https://raw.githubusercontent.com/CIBIRAJGL/WISP/main/user.png"
 avatars = {"assistant": logo_url, "user": user_url}
 
