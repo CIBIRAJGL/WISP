@@ -1,15 +1,17 @@
 import streamlit as st
 import time
 import itertools
-import imp  # Replace with your actual AI API module
+import imp  # Keeping imp as per your request
 
 st.set_page_config(page_title='Wisp!', page_icon='Logo.png')
 
 # Store messages
 if 'messages' not in st.session_state:
     st.session_state.messages = []
-logo_url="https://github.com/CIBIRAJGL/WISP/blob/main/user.png"
-user_url="https://github.com/CIBIRAJGL/WISP/blob/main/user.png"
+
+# Use RAW GitHub URLs for images
+logo_url = "https://raw.githubusercontent.com/CIBIRAJGL/WISP/main/user.png"
+user_url = "https://raw.githubusercontent.com/CIBIRAJGL/WISP/main/user.png"
 avatars = {"assistant": logo_url, "user": user_url}
 
 st.markdown("# Hey Wisp! 🤖")
@@ -36,7 +38,7 @@ if prompt := st.chat_input("Type here.."):
         full_response = ""
 
         with st.spinner(text="Thinking... 💭💭💭"):
-            raw = imp.AI_(prompt)
+            raw = imp.AI_(prompt)  # Keeping the original imp module usage
             response = str(raw)
 
             # Typing effect
