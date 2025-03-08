@@ -2,7 +2,7 @@ from groq import Groq
 
 def AI_(inp):
     client = Groq(
-        api_key="ggsk_d8xjA9KYPvaEKvSp50EJWGdyb3FYRddh5LdUhcbc474RrC8Sfrja"
+        api_key="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"
     )
     chat_completion = client.chat.completions.create(
             messages=[
