@@ -4,8 +4,8 @@ import itertools
 import imp  # Keeping imp as per your request
 
 # Use RAW GitHub URLs for images
-logo_url = "https://raw.githubusercontent.com/CIBIRAJGL/WISP/main/Logo.png"
-user_url = "https://raw.githubusercontent.com/CIBIRAJGL/WISP/main/user.png"
+logo_url = "https://raw.githubusercontent.com/CIBIRAJGL/WISP/main/Resources/Logo.png"
+user_url = "https://raw.githubusercontent.com/CIBIRAJGL/WISP/main/Resources/User.png"
 
 st.set_page_config(page_title='Wisp!', page_icon= logo_url)
 
