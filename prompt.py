@@ -1,25 +1,35 @@
 import streamlit as st
-import os
 import time
 import itertools
 from groq import Groq
 
-# Set Streamlit page configuration
+# ---------- SETUP ----------
+# Set up API key securely
+api_key = st.secrets["GROQ_API_KEY"]
+
+# Set up avatars
 logo_url = "https://raw.githubusercontent.com/CIBIRAJGL/WISP/main/Resources/Logo.png"
 user_url = "https://raw.githubusercontent.com/CIBIRAJGL/WISP/main/Resources/User.png"
+avatars = {"assistant": logo_url, "user": user_url}
+
+# Page config
 st.set_page_config(page_title='Wisp!', page_icon=logo_url)
 
-# Define the AI function using Groq API
+# ---------- INIT ----------
+if 'messages' not in st.session_state:
+    st.session_state.messages = []
+
+# ---------- HEADER ----------
+st.markdown("# Hey Wisp! 🤖")
+with st.chat_message(name="assistant", avatar=logo_url):
+    st.markdown("### Ask your Queries!")
+
+# ---------- FUNCTION ----------
 def AI_(inp):
     try:
-        client = Groq(api_key=st.secrets["GROQ_API_KEY"])  # Use Streamlit secrets
+        client = Groq(api_key=api_key)
         chat_completion = client.chat.completions.create(
-            messages=[
-                {
-                    "role": "user",
-                    "content": inp,
-                }
-            ],
+            messages=[{"role": "user", "content": inp}],
             model="llama3-70b-8192",
             stream=False,
         )
@@ -27,43 +37,32 @@ def AI_(inp):
     except Exception as e:
         return f"[Error] {str(e)}"
 
-# Store chat messages in session state
-if 'messages' not in st.session_state:
-    st.session_state.messages = []
-
-avatars = {"assistant": logo_url, "user": user_url}
-
-# Header
-st.markdown("# Hey Wisp! 🤖")
-with st.chat_message(name="assistant", avatar=avatars["assistant"]):
-    st.markdown('### Ask your Queries!')
-
-# Display previous messages
+# ---------- SHOW PREVIOUS MESSAGES ----------
 for message in st.session_state.messages:
-    with st.chat_message(name=message["role"], avatar=avatars[message["role"]]):
-        st.markdown(message["content"])
+    role = message.get("role", "assistant")
+    content = message.get("content", "")
+    avatar = avatars.get(role, logo_url)
+    with st.chat_message(name=role, avatar=avatar):
+        st.markdown(content)
 
-# Input and response
-if prompt := st.chat_input("Type here.."):
+# ---------- USER INPUT ----------
+if prompt := st.chat_input("Type here..."):
+    # Show user input
     st.session_state.messages.append({"role": "user", "content": prompt})
-    with st.chat_message(name="user", avatar=avatars["user"]):
+    with st.chat_message(name="user", avatar=user_url):
         st.markdown(prompt)
 
-    with st.chat_message(name="assistant", avatar=avatars["assistant"]):
+    # Process and show response
+    with st.chat_message(name="assistant", avatar=logo_url):
         message_placeholder = st.empty()
         full_response = ""
 
-        with st.spinner(text="Thinking... 💭💭💭"):
-            raw = AI_(prompt)
-            response = str(raw)
-
-            # Typing effect
-            dots = itertools.cycle(['', '.', '..', '...'])
+        with st.spinner("Thinking... 💭"):
+            response = AI_(prompt)
             for chunk in response.split():
                 full_response += chunk + " "
                 time.sleep(0.05)
-                message_placeholder.markdown(full_response + next(dots), unsafe_allow_html=True)
-
+                message_placeholder.markdown(full_response + next(itertools.cycle(['', '.', '..', '...'])), unsafe_allow_html=True)
             message_placeholder.markdown(full_response)
 
-        st.session_state.messages.append({"role": "assistant", "content": full_response})
+    st.session_state.messages.append({"role": "assistant", "content": full_response})
